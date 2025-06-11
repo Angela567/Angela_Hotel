@@ -1,12 +1,79 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 
+using Angela_Hotel.Models;
+
+using Microsoft.Data.SqlClient;
+
+using System.Data;
+
+using Microsoft.Extensions.Configuration;
+
+
+
 namespace Angela_Hotel.Controllers
+
 {
+
     public class LoginController : Controller
+
     {
-        public IActionResult Index()
+
+        private readonly IConfiguration _configuration;
+
+        public LoginController(IConfiguration configuration)
+
         {
-            return View();
+
+            _configuration = configuration;
+
         }
+
+        public IActionResult Index()
+
+        {
+
+            return View();
+
+        }
+
+        [HttpPost]
+
+        public IActionResult Index(LoginViewModel model)
+
+        {
+
+            if (ModelState.IsValid)
+
+            {
+
+                string connectionString = _configuration.GetConnectionString("DefaultConnection");
+
+                using (SqlConnection con = new SqlConnection(connectionString))
+
+                {
+
+                    SqlCommand cmd = new SqlCommand("LoginSP", con);
+
+                    cmd.CommandType = CommandType.StoredProcedure;
+
+                    cmd.Parameters.AddWithValue("@Correo", model.Correo);
+
+                    cmd.Parameters.AddWithValue("@Contraseña", model.Contraseña);
+
+                    con.Open();
+
+                   
+
+                    
+
+                }
+
+            }
+
+            return View(model);
+
+        }
+
     }
+
 }
