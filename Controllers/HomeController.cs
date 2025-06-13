@@ -15,8 +15,17 @@ namespace Angela_Hotel.Controllers
 
         public IActionResult Index()
         {
+            var nombreUsuario = HttpContext.Session.GetString("NombreUsuario");
+
+            if (string.IsNullOrEmpty(nombreUsuario))
+            {
+                return RedirectToAction("Index", "Login");
+            }
+
+            ViewBag.NombreUsuario = nombreUsuario;
             return View();
         }
+
 
         public IActionResult Privacy()
         {
@@ -28,5 +37,12 @@ namespace Angela_Hotel.Controllers
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
+
+        public IActionResult Logout()
+        {
+            HttpContext.Session.Clear(); // elimina toda la sesión
+            return RedirectToAction("Index", "Login");
+        }
+
     }
 }

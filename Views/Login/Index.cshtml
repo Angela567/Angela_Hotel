@@ -104,6 +104,13 @@
 <body>
     <div class="login-container">
         <h2>Iniciar Sesión</h2>
+        @if (ViewBag.Mensaje != null)
+        {
+            <div style="color: red; text-align: center; margin-bottom: 10px;">
+                @ViewBag.Mensaje
+            </div>
+        }
+
         <form asp-controller="Login" asp-action="Index" method="post">
             <div class="form-group">
                 <label for="email">Correo electrónico</label>
