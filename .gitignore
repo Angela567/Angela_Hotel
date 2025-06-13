@@ -1,0 +1,14 @@
+# Archivos temporales y de compilación
+.vs/
+bin/
+obj/
+*.user
+*.suo
+*.cache
+*.pdb
+*.exe
+*.dll
+*.vsidx
+*.db
+*.shm
+*.wal
