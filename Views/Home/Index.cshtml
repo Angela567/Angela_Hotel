@@ -1,11 +1,76 @@
 ﻿@{
     ViewData["Title"] = "Inicio";
+    Layout = null; // Igual que el login para mantener estilos
 }
 
-<div class="text-center">
-    <h1 class="display-4">Bienvenido, @ViewBag.NombreUsuario</h1>
-    <p>Has iniciado sesión correctamente en el sistema.</p>
-</div>
-<form asp-action="Logout" method="post">
-    <button type="submit">Cerrar Sesión</button>
-</form>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewData["Title"] - Hotel</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
+    <style>
+        * {
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background: linear-gradient(to right, #1E90FF, #00BFFF);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+        }
+
+        .home-container {
+            background: #fff;
+            padding: 2rem 3rem;
+            border-radius: 16px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+            width: 100%;
+            max-width: 500px;
+            text-align: center;
+        }
+
+        .home-container h1 {
+            color: #1E90FF;
+            margin-bottom: 1rem;
+        }
+
+        .home-container p {
+            font-size: 1.1rem;
+            margin-bottom: 2rem;
+        }
+
+        .home-container form button {
+            background-color: #FF6347;
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+            .home-container form button:hover {
+                background-color: #cc4e3b;
+            }
+    </style>
+</head>
+<body>
+    <div class="home-container">
+        <h1>Hola, @ViewBag.NombreUsuario</h1>
+        <p>Has iniciado sesión correctamente en el sistema.</p>
+
+        <form asp-action="Logout" method="post">
+            <button type="submit">Cerrar Sesión</button>
+        </form>
+    </div>
+</body>
+</html>
+

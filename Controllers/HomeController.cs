@@ -1,6 +1,9 @@
+using Angela_Hotel.Controllers;
 using Angela_Hotel.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Data.SqlClient;
 using System.Diagnostics;
+
 
 namespace Angela_Hotel.Controllers
 {
@@ -26,7 +29,6 @@ namespace Angela_Hotel.Controllers
             return View();
         }
 
-
         public IActionResult Privacy()
         {
             return View();
@@ -40,9 +42,8 @@ namespace Angela_Hotel.Controllers
 
         public IActionResult Logout()
         {
-            HttpContext.Session.Clear(); // elimina toda la sesión
+            HttpContext.Session.Clear();
             return RedirectToAction("Index", "Login");
         }
-
     }
 }
