@@ -1,0 +1,109 @@
+﻿
+@model Angela_Hotel.Models.Usuario
+@{
+    ViewData["Title"] = "Editar Usuario";
+    Layout = null;
+    var roles = ViewBag.Roles as List<Rol>;
+}
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>@ViewData["Title"] - Hotel</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(to right, #1E90FF, #00BFFF);
+            margin: 0;
+            padding: 0;
+        }
+
+        .form-container {
+            background: white;
+            max-width: 500px;
+            margin: 3rem auto;
+            padding: 2rem;
+            border-radius: 16px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+        }
+
+        h2 {
+            text-align: center;
+            color: #1E90FF;
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group {
+            margin-bottom: 1rem;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 0.4rem;
+            color: #333;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 0.7rem;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            font-size: 1rem;
+        }
+
+        .btn {
+            display: block;
+            width: 100%;
+            background-color: #32CD32;
+            color: white;
+            border: none;
+            padding: 0.8rem;
+            border-radius: 8px;
+            font-size: 1rem;
+            cursor: pointer;
+            margin-top: 1rem;
+        }
+
+        .btn:hover {
+            background-color: #28a428;
+        }
+    </style>
+</head>
+<body>
+    <div class="form-container">
+        <h2>Crear Usuario</h2>
+        <form asp-action="Edit" method="post">
+            <input type="hidden" asp-for="ID_Usuario" />
+            <div class="form-group">
+                <label>Nombre</label>
+                <input asp-for="Nombre" />
+                <span asp-validation-for="Nombre" style="color:red;"></span>
+            </div>
+            <div class="form-group">
+                <label>Correo</label>
+                <input asp-for="Correo" type="email" />
+                <span asp-validation-for="Correo" style="color:red;"></span>
+            </div>
+            <div class="form-group">
+                <label>Contraseña</label>
+                <input asp-for="Contrasena" type="password" />
+                <span asp-validation-for="Contrasena" style="color:red;"></span>
+            </div>
+            <div class="form-group">
+                <label>Rol</label>
+                <select asp-for="ID_Rol">
+                    <option value="">-- Selecciona un rol --</option>
+                    @foreach (var rol in roles)
+                    {
+                        <option value="@rol.ID_Rol">@rol.NombreRol</option>
+                    }
+                </select>
+                <span asp-validation-for="ID_Rol" style="color:red;"></span>
+            </div>
+            <button type="submit" class="btn">Guardar</button>
+        </form>
+    </div>
+</body>
+</html>

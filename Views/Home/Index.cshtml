@@ -1,6 +1,8 @@
 ﻿@{
     ViewData["Title"] = "Inicio";
-    Layout = null; // Igual que el login para mantener estilos
+    Layout = null;
+    var rol = Context.Session.GetInt32("RolUsuario");
+    var nombre = ViewBag.NombreUsuario;
 }
 
 <!DOCTYPE html>
@@ -36,41 +38,75 @@
             text-align: center;
         }
 
-        .home-container h1 {
-            color: #1E90FF;
-            margin-bottom: 1rem;
+            .home-container h1 {
+                color: #1E90FF;
+                margin-bottom: 1rem;
+            }
+
+            .home-container p {
+                font-size: 1.1rem;
+                margin-bottom: 2rem;
+            }
+
+            .home-container .btn {
+                display: inline-block;
+                padding: 0.75rem 1.5rem;
+                border-radius: 8px;
+                font-size: 1rem;
+                text-decoration: none;
+                margin: 0.5rem;
+                cursor: pointer;
+                transition: background-color 0.3s ease;
+            }
+
+        .btn-admin {
+            background-color: #32CD32;
+            color: white;
         }
 
-        .home-container p {
-            font-size: 1.1rem;
-            margin-bottom: 2rem;
+            .btn-admin:hover {
+                background-color: #28a428;
+            }
+
+        .btn-user {
+            background-color: #1E90FF;
+            color: white;
         }
 
-        .home-container form button {
+            .btn-user:hover {
+                background-color: #1a75cc;
+            }
+
+        .btn-logout {
             background-color: #FF6347;
             color: white;
             border: none;
-            padding: 0.75rem 1.5rem;
-            border-radius: 8px;
-            font-size: 1rem;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
         }
 
-            .home-container form button:hover {
+            .btn-logout:hover {
                 background-color: #cc4e3b;
             }
     </style>
 </head>
 <body>
     <div class="home-container">
-        <h1>Hola, @ViewBag.NombreUsuario</h1>
+        <h1>Hola, @nombre</h1>
         <p>Has iniciado sesión correctamente en el sistema.</p>
 
+        @if (rol == 1)
+        {
+            <!-- Admin -->
+            <a href="@Url.Action("Index", "Usuario")" class="btn btn-admin">Gestionar Usuarios</a>
+        }
+        else
+        {
+            <!-- Cliente -->
+            <a href="@Url.Action("Index", "Reserva")" class="btn btn-user">Reservar Habitación</a>
+        }
+
         <form asp-action="Logout" method="post">
-            <button type="submit">Cerrar Sesión</button>
+            <button type="submit" class="btn btn-logout">Cerrar Sesión</button>
         </form>
     </div>
 </body>
 </html>
-

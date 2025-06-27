@@ -30,17 +30,24 @@ namespace Angela_Hotel.Controllers
                 {
                     con.Open();
                     SqlCommand cmd = new SqlCommand("LoginSP", con);
-                    cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                    cmd.CommandType = CommandType.StoredProcedure;
                     cmd.Parameters.AddWithValue("@Correo", model.Correo);
                     cmd.Parameters.AddWithValue("@Contraseña", model.Contraseña);
 
                     SqlDataReader reader = cmd.ExecuteReader();
                     if (reader.Read())
                     {
+                        int idUsuario = Convert.ToInt32(reader["ID_Usuario"]);
                         string nombre = reader["Nombre"].ToString();
+                        int rol = reader["ID_Rol"] != DBNull.Value ? Convert.ToInt32(reader["ID_Rol"]) : 0;
+
+                        HttpContext.Session.SetInt32("ID_Usuario", idUsuario); // 👈 ESTA ES LA CLAVE
                         HttpContext.Session.SetString("NombreUsuario", nombre);
+                        HttpContext.Session.SetInt32("RolUsuario", rol);
+
                         return RedirectToAction("Index", "Home");
                     }
+
                     else
                     {
                         ViewBag.Mensaje = "Correo o contraseña incorrectos";
@@ -75,10 +82,11 @@ namespace Angela_Hotel.Controllers
                         return View(usuario);
                     }
 
-                    SqlCommand insertCmd = new SqlCommand("INSERT INTO Usuario (Nombre, Correo, Contraseña) VALUES (@Nombre, @Correo, @Contrasena)", con);
+                    SqlCommand insertCmd = new SqlCommand("INSERT INTO Usuario (Nombre, Correo, Contraseña, ID_Rol) VALUES (@Nombre, @Correo, @Contrasena, @Rol)", con);
                     insertCmd.Parameters.AddWithValue("@Nombre", usuario.Nombre);
                     insertCmd.Parameters.AddWithValue("@Correo", usuario.Correo);
                     insertCmd.Parameters.AddWithValue("@Contrasena", usuario.Contrasena);
+                    insertCmd.Parameters.AddWithValue("@Rol", 2); // Rol 2 = Cliente
                     insertCmd.ExecuteNonQuery();
 
                     return RedirectToAction("Index", "Login");

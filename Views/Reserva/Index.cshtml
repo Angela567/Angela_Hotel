@@ -1,0 +1,109 @@
+﻿
+@model List<Angela_Hotel.Models.Reserva>
+@{
+    ViewData["Title"] = "Reservas";
+    Layout = null;
+}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Reservas</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet" />
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(to right, #1E90FF, #00BFFF);
+            padding: 2rem;
+        }
+
+        .container {
+            background: #fff;
+            border-radius: 16px;
+            padding: 2rem;
+            max-width: 1000px;
+            margin: auto;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+        }
+
+        h2 {
+            color: #1E90FF;
+            margin-bottom: 1rem;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            padding: 0.75rem;
+            border: 1px solid #ddd;
+            text-align: center;
+        }
+
+        th {
+            background-color: #1E90FF;
+            color: white;
+        }
+
+        .btn {
+            background-color: #FFA500;
+            color: white;
+            padding: 0.5rem 1rem;
+            text-decoration: none;
+            border-radius: 8px;
+            margin: 0 0.25rem;
+            display: inline-block;
+        }
+
+        .btn:hover {
+            background-color: #e69500;
+        }
+
+        .btn-create {
+            background-color: #32CD32;
+            margin-bottom: 1rem;
+        }
+
+        .btn-create:hover {
+            background-color: #28a428;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Listado de Reservas</h2>
+        <a href="@Url.Action("Create")" class="btn btn-create">Crear Nueva Reserva</a>
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Usuario</th>
+                    <th>Habitación</th>
+                    <th>Inicio</th>
+                    <th>Fin</th>
+                    <th>Estado</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var r in Model)
+                {
+                    <tr>
+                        <td>@r.ID_Reserva</td>
+                        <td>@r.NombreUsuario</td>
+                        <td>@r.NumeroHabitacion</td>
+                        <td>@r.FechaInicioTexto</td>
+                        <td>@r.FechaFinTexto</td>
+                        <td>@r.Estado</td>
+                        <td>
+                            <a class="btn" href="@Url.Action("Edit", new { id = r.ID_Reserva })">Editar</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>
