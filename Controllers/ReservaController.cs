@@ -32,7 +32,7 @@ namespace Angela_Hotel.Controllers
 
                 string query;
 
-                if (rol == 1) // Admin ve todas las reservas
+                if (rol == 1)
                 {
                     query = @"
                 SELECT r.ID_Reserva, r.ID_Usuario, u.Nombre AS NombreUsuario,
@@ -46,7 +46,7 @@ namespace Angela_Hotel.Controllers
                 INNER JOIN Fecha f1 ON r.ID_FechaInicio = f1.ID_Fecha
                 INNER JOIN Fecha f2 ON r.ID_FechaFin = f2.ID_Fecha";
                 }
-                else // Cliente solo ve sus reservas
+                else 
                 {
                     query = @"
                 SELECT r.ID_Reserva, r.ID_Usuario, u.Nombre AS NombreUsuario,
@@ -133,7 +133,7 @@ namespace Angela_Hotel.Controllers
         [HttpGet]
         public IActionResult Edit(int id)
         {
-            // Verificamos si hay sesión activa
+            
             int? idUsuarioSesion = HttpContext.Session.GetInt32("ID_Usuario");
             if (idUsuarioSesion == null)
             {
@@ -165,7 +165,7 @@ namespace Angela_Hotel.Controllers
 
             if (reserva == null)
             {
-                return NotFound(); // No se encontró o no pertenece al cliente
+                return NotFound(); 
             }
 
             ViewBag.Habitaciones = ObtenerHabitaciones();
@@ -188,7 +188,7 @@ namespace Angela_Hotel.Controllers
                 {
                     con.Open();
 
-                    // Validar que la reserva le pertenece al usuario
+                    
                     SqlCommand validarCmd = new SqlCommand("SELECT COUNT(*) FROM Reserva WHERE ID_Reserva = @ID AND ID_Usuario = @ID_Usuario", con);
                     validarCmd.Parameters.AddWithValue("@ID", reserva.ID_Reserva);
                     validarCmd.Parameters.AddWithValue("@ID_Usuario", idUsuarioSesion);
@@ -196,10 +196,10 @@ namespace Angela_Hotel.Controllers
 
                     if (existe == 0)
                     {
-                        return Unauthorized(); // Intento de modificar algo que no es suyo
+                        return Unauthorized(); 
                     }
 
-                    // Actualizar
+                   
                     SqlCommand cmd = new SqlCommand(@"UPDATE Reserva 
                 SET ID_Habitacion = @ID_Habitacion, 
                     ID_FechaInicio = @ID_FechaInicio, 

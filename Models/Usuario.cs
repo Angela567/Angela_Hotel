@@ -19,7 +19,7 @@ namespace Angela_Hotel.Models
         [Required(ErrorMessage = "Debe seleccionar un rol")]
         public int ID_Rol { get; set; }
 
-        // Esta propiedad se usa solo para mostrar el nombre del rol en la tabla/lista
+        
         public string? NombreRol { get; set; }
     }
 }
